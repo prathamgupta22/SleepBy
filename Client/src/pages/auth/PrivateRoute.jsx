@@ -40,7 +40,6 @@ export default function PrivateRoute() {
   }, [auth?.token]);
 
   if (loading) {
-    // Render a loading spinner or message while checking authentication
     return <div>Loading...</div>;
   }
 

@@ -13,16 +13,18 @@ const sleepTrackSchema = new mongoose.Schema(
       required: true,
     },
     bedtime: {
-      type: String,
+      type: Date,
       required: true,
     },
     waketime: {
-      type: String,
+      type: Date,
       required: true,
     },
     sleep_hours: {
       type: Number,
       required: true,
+      min: 0,
+      max: 23,
     },
   },
   { timestamps: true }

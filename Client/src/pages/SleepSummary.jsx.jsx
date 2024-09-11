@@ -78,10 +78,10 @@ const SleepSummary = () => {
                 {sleepData.map((record) => (
                   <tr key={record._id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                      {record.bedtime}
+                      {new Date(record.bedtime).toLocaleTimeString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                      {record.waketime}
+                      {new Date(record.waketime).toLocaleTimeString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                       {record.sleep_hours}

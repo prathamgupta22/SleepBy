@@ -3,7 +3,10 @@ import SleepTrack from "../models/sleeptrack.model.js";
 // Start sleep tracking
 export const startSleepTracking = async (req, res) => {
   try {
-    const { issue_duration, bedtime, waketime, sleep_hours } = req.body;
+    let { issue_duration, bedtime, waketime, sleep_hours } = req.body;
+
+    bedtime = timeToISODate(bedtime);
+    waketime = timeToISODate(waketime);
 
     // Validate required fields
     if (!issue_duration || !bedtime || !waketime || !sleep_hours) {
@@ -36,6 +39,20 @@ export const startSleepTracking = async (req, res) => {
     });
   }
 };
+function timeToISODate(timeStr) {
+  // Split the time string into hours and minutes
+  const [hours, minutes] = timeStr.split(":").map(Number);
+
+  // Create a new date object with the current date and the given time
+  const date = new Date();
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+
+  // Return the ISO string for the time
+  return date.toISOString();
+}
 
 // Get sleep summary
 export const getSleepSummary = async (req, res) => {
