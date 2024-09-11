@@ -40,7 +40,7 @@ const Page4 = () => {
             <input
               type="range"
               min="1"
-              max="10"
+              max="24"
               value={hoursOfSleep}
               onChange={(e) => setHoursOfSleep(Number(e.target.value))}
               className="w-full"
@@ -48,7 +48,7 @@ const Page4 = () => {
             />
             <div className="flex justify-between mt-2">
               <span>1 hr</span>
-              <span>10 hrs</span>
+              <span>24 hrs</span>
             </div>
           </div>
           <button
