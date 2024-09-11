@@ -7,12 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/ui/shared/Footer";
+import { useAuth } from "@/context/auth";
 
 const SignUp = () => {
   const [input, setInput] = useState({
     nickname: "",
     password: "",
   });
+  const [auth] = useAuth();
   const navigate = useNavigate();
 
   const changeEventHandler = (e) => {
@@ -28,6 +30,7 @@ const SignUp = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
+        sessionStorage.setItem("nickname", input.nickname);
         navigate("/login");
       }
     } catch (error) {
@@ -36,8 +39,35 @@ const SignUp = () => {
     }
   };
 
+  if (auth.user) {
+    return (
+      <div className="min-h-screen flex flex-col justify-between bg-gradient-to-r from-purple-50 to-purple-100">
+        <Navbar />
+        <div className="flex-grow flex items-center justify-center px-4">
+          <div className="max-w-md w-full bg-white shadow-xl rounded-lg p-10 transition-all duration-300 hover:shadow-2xl">
+            <h1 className="text-3xl font-bold text-gray-900 text-center">
+              You are already logged in
+            </h1>
+            <p className="mt-6 text-lg text-gray-700 text-center">
+              To use a different account, please
+              <Link
+                to="/logout"
+                className="text-purple-700 hover:text-purple-500 font-semibold ml-1 transition-colors duration-200"
+                aria-label="Logout link"
+              >
+                Logout{" "}
+              </Link>
+              and sign up with a new account.
+            </p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gray-50">
+    <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen flex flex-col justify-between bg-gray-50">
       <Navbar />
       <div className="flex flex-grow items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 bg-white shadow-md rounded-lg p-8">
@@ -81,7 +111,7 @@ const SignUp = () => {
                 to="/login"
                 className="font-medium text-indigo-600 hover:text-purple-500"
               >
-                LogIn
+                Log In
               </Link>
             </p>
           </form>

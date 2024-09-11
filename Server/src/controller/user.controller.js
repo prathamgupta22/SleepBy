@@ -82,21 +82,21 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      sameSite: "strict",
-    });
+// export const logout = async (req, res) => {
+//   try {
+//     res.clearCookie("token", {
+//       httpOnly: true,
+//       sameSite: "strict",
+//     });
 
-    return res.status(200).send({
-      success: true,
-      message: "Logged out successfully",
-    });
-  } catch (error) {
-    return res.status(500).send({
-      success: false,
-      message: "Error in Logout API",
-    });
-  }
-};
+//     return res.status(200).send({
+//       success: true,
+//       message: "Logged out successfully",
+//     });
+//   } catch (error) {
+//     return res.status(500).send({
+//       success: false,
+//       message: "Error in Logout API",
+//     });
+//   }
+// };

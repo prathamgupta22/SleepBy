@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "sonner";
 import Navbar from "@/components/ui/shared/Navbar";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/ui/shared/Footer";
+import { useAuth } from "@/context/auth";
+import { toast } from "sonner";
 
 const Login = () => {
   const [nickname, setNickname] = useState("");
@@ -14,8 +15,22 @@ const Login = () => {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Retrieve nickname from sessionStorage
+    const storedNickname = sessionStorage.getItem("nickname");
+    if (storedNickname) {
+      setNickname(storedNickname);
+      sessionStorage.removeItem("nickname"); // Clear the stored value
+    }
+  }, []);
+
   const changeEventHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "nickname") {
+      setNickname(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
   };
 
   const submitHandler = async (e) => {
@@ -26,7 +41,7 @@ const Login = () => {
         password,
       });
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message);
+        toast.success(res.data.message);
         setAuth({
           ...auth,
           user: res.data.user,
@@ -43,8 +58,14 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (auth.user) {
+      navigate("/");
+    }
+  }, [auth.user, navigate]);
+
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gray-50">
+    <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 min-h-screen flex flex-col justify-between bg-gray-50">
       <Navbar />
       <div className="flex flex-grow items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 bg-white shadow-md rounded-lg p-8">
@@ -57,7 +78,7 @@ const Login = () => {
               <Input
                 id="nickname"
                 type="text"
-                value={input.nickname}
+                value={nickname}
                 name="nickname"
                 onChange={changeEventHandler}
                 placeholder="Your nickname"
@@ -69,7 +90,7 @@ const Login = () => {
               <Input
                 id="password"
                 type="password"
-                value={input.password}
+                value={password}
                 name="password"
                 onChange={changeEventHandler}
                 placeholder="••••••••"
