@@ -2,6 +2,7 @@ import Footer from "@/components/ui/shared/Footer";
 import Navbar from "@/components/ui/shared/Navbar";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Chart } from "./Chart";
 
 const SleepSummary = () => {
   const [sleepData, setSleepData] = useState([]);
@@ -96,6 +97,9 @@ const SleepSummary = () => {
           </div>
         )}
       </main>
+      <div className="mb-10">
+        <Chart sleepData={sleepData} />
+      </div>
       <Footer />
     </div>
   );
