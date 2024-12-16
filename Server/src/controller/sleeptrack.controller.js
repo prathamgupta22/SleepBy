@@ -8,7 +8,6 @@ export const startSleepTracking = async (req, res) => {
     bedtime = timeToISODate(bedtime);
     waketime = timeToISODate(waketime);
 
-    // Validate required fields
     if (!issue_duration || !bedtime || !waketime || !sleep_hours) {
       return res.status(400).json({
         success: false,
@@ -16,7 +15,6 @@ export const startSleepTracking = async (req, res) => {
       });
     }
 
-    // Create the sleep tracking record
     const sleepTracking = await SleepTrack.create({
       user: req.user._id,
       issue_duration,
@@ -43,14 +41,12 @@ function timeToISODate(timeStr) {
   // Split the time string into hours and minutes
   const [hours, minutes] = timeStr.split(":").map(Number);
 
-  // Create a new date object with the current date and the given time
   const date = new Date();
   date.setHours(hours);
   date.setMinutes(minutes);
   date.setSeconds(0);
   date.setMilliseconds(0);
 
-  // Return the ISO string for the time
   return date.toISOString();
 }
 

@@ -44,7 +44,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // Find user by nickname
     let user = await User.findOne({ nickname }).select("+password");
     if (!user) {
       return res.status(400).json({
@@ -53,7 +52,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // Compare password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).send({
@@ -62,7 +60,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // Generate token
     const token = user.generateToken();
 
     res.status(200).send({

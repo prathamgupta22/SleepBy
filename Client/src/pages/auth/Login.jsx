@@ -16,11 +16,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve nickname from sessionStorage
     const storedNickname = sessionStorage.getItem("nickname");
     if (storedNickname) {
       setNickname(storedNickname);
-      sessionStorage.removeItem("nickname"); // Clear the stored value
+      sessionStorage.removeItem("nickname");
     }
   }, []);
 

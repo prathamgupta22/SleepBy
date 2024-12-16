@@ -30,6 +30,12 @@ const sleepTrackSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+find(
+  { issue_duration: "Less than 2 weeks" } || {
+    issue_duration: "More than 8 weeks",
+  }
+);
+
 const SleepTrack = mongoose.model("SleepTrack", sleepTrackSchema);
 
 export default SleepTrack;
